@@ -272,24 +272,6 @@ See LICENSE file for details.
 
 ---
 
-## Quick Start
-
-### Backend
-```bash
-cd backend
-python server.py
-```
-
-### Frontend
-```bash
-cd frontend
-npm run dev
-```
-
-Open **http://localhost:5174** in your browser.
-
----
-
 ## Important Disclaimer
 
 ⚠️ This detector is trained on **2020-2022 era TTS systems**. It achieves **99% accuracy** on training-era systems but approximately **60% accuracy** on modern AI voice synthesis (ElevenLabs, Resemble AI, etc.). This demonstrates the fundamental challenge in deepfake detection: models learn system-specific artifacts rather than general "fakeness."
