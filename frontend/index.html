@@ -29,7 +29,6 @@
 
         <div class="mode-selector">
             <button id="uploadModeBtn" class="mode-btn active">Upload File</button>
-            <button id="recordModeBtn" class="mode-btn">Record Audio</button>
         </div>
 
         <div id="uploadMode" class="mode-content active">
@@ -48,20 +47,6 @@
                 </div>
             </div>
         </div>
-
-        <div id="recordMode" class="mode-content">
-            <div class="record-container">
-                <div class="waveform-container">
-                    <canvas id="waveformCanvas"></canvas>
-                </div>
-                <button id="recordBtn" class="record-btn">
-                    <span class="record-icon"></span>
-                    <span class="record-text">Start Recording</span>
-                </button>
-                <p class="record-info">Record at least 2 seconds of audio</p>
-            </div>
-        </div>
-
         <div id="loadingIndicator" class="loading-indicator hidden">
             <div class="spinner"></div>
             <p>Analyzing audio...</p>
@@ -105,7 +90,7 @@
         </section>
 
         <footer>
-            <p>Powered by CNN-based spectrogram analysis</p>
+            <p>Powered by CNN-based spectrogram analysis. Also, I'm not sure if you're aware, but I'm not a professional developer. I'm a student. So, if you see any mistakes, please let me know. I'm happy to learn and improve.</p>
         </footer>
     </div>
     <script type="module" src="/main.js"></script>

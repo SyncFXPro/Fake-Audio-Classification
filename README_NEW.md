@@ -43,7 +43,6 @@ An **honest, AI-assisted research project** that:
 
 ## Features
 
-- 🎤 **Real-time audio recording** with waveform visualization
 - 📁 **File upload** with drag & drop support
 - 📊 **Complete training analysis** with 5 visualization graphs
 - 🔬 **Technical documentation** with architecture details
@@ -52,4 +51,4 @@ An **honest, AI-assisted research project** that:
 
 ---
 
-For complete documentation, see **[PROJECT_SUMMARY.md](PROJECT_SUMMARY.md)**
+For complete documentation, see **[PROJECT_SUMMARY.md](Documentation/Final_Paper/FAC%20Conclusion%20%26%20Mistakes.pdf)**

@@ -134,43 +134,6 @@ def predict_upload():
         return jsonify({"error": f"Error processing file: {str(e)}"}), 500
 
 
-@app.route('/api/predict/realtime', methods=['POST'])
-def predict_realtime():
-    """Handle real-time audio recording prediction."""
-    if model is None:
-        return jsonify({"error": "Model not loaded"}), 503
-    
-    try:
-        data = request.get_json()
-        
-        if 'audio' not in data:
-            return jsonify({"error": "No audio data provided"}), 400
-        
-        audio_base64 = data['audio']
-        
-        if ',' in audio_base64:
-            audio_base64 = audio_base64.split(',')[1]
-        
-        audio_bytes = base64.b64decode(audio_base64)
-        
-        import tempfile
-        with tempfile.NamedTemporaryFile(suffix='.webm', delete=False) as temp_file:
-            temp_file.write(audio_bytes)
-            temp_path = temp_file.name
-        
-        try:
-            audio_data, sr = librosa.load(temp_path, sr=16000, duration=2.0)
-            os.remove(temp_path)
-        except Exception as load_error:
-            os.remove(temp_path)
-            return jsonify({"error": f"Error loading audio: {str(load_error)}. Make sure the recording is at least 2 seconds long."}), 400
-        
-        result = predict_audio(audio_data, sr)
-        
-        return jsonify(result)
-    
-    except Exception as e:
-        return jsonify({"error": f"Error processing audio: {str(e)}"}), 500
 
 
 @app.route('/api/health', methods=['GET'])

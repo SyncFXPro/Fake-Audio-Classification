@@ -203,7 +203,6 @@ SpectrogramCNN
 
 #### POST `/api/predict/realtime`
 - Accepts base64 audio blob
-- For microphone recordings
 - Same response format as upload
 
 #### GET `/api/health`
@@ -235,13 +234,6 @@ SpectrogramCNN
 - Drag-over visual feedback
 - File type validation
 - Upload progress
-
-#### Record Mode
-- Microphone access
-- Real-time waveform visualization
-- Start/Stop recording
-- Visual recording indicator
-- Minimum 2-second recording
 
 #### Result Display
 - Fakeness score gauge (0-100%)
@@ -347,7 +339,6 @@ Step-by-step guide:
 
 ### Frontend Features
 - ✅ File upload with drag & drop
-- ✅ Real-time microphone recording
 - ✅ Waveform visualization
 - ✅ Animated result display
 - ✅ Responsive design
@@ -458,7 +449,7 @@ curl -X POST -F "file=@audio.mp3" \
 5. ✅ Training - Multi-GPU with validation
 6. ✅ Validation Test - Metrics and graphs
 7. ✅ Server - Flask API with 3 endpoints
-8. ✅ Frontend - Upload + recording UI
+8. ✅ Frontend - Upload UI
 9. ✅ Integration - End-to-end workflow
 
 ---

@@ -24,6 +24,7 @@ class SpectrogramCNN(nn.Module):
             nn.ReLU(inplace=True),
             nn.MaxPool2d(kernel_size=2, stride=2)
         )
+        #one!
         
         self.conv_block2 = nn.Sequential(
             nn.Conv2d(32, 64, kernel_size=3, padding=1),
@@ -31,6 +32,7 @@ class SpectrogramCNN(nn.Module):
             nn.ReLU(inplace=True),
             nn.MaxPool2d(kernel_size=2, stride=2)
         )
+        #two!
         
         self.conv_block3 = nn.Sequential(
             nn.Conv2d(64, 128, kernel_size=3, padding=1),
@@ -38,14 +40,14 @@ class SpectrogramCNN(nn.Module):
             nn.ReLU(inplace=True),
             nn.MaxPool2d(kernel_size=2, stride=2)
         )
-        
+        #three!
         self.conv_block4 = nn.Sequential(
             nn.Conv2d(128, 256, kernel_size=3, padding=1),
             nn.BatchNorm2d(256),
             nn.ReLU(inplace=True),
             nn.AdaptiveAvgPool2d((1, 1))
         )
-        
+        #four!
         self.classifier = nn.Sequential(
             nn.Linear(256, 128),
             nn.ReLU(inplace=True),

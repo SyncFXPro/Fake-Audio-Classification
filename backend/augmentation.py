@@ -3,6 +3,14 @@ import librosa
 import soundfile as sf
 import io
 
+
+
+
+
+
+
+
+
 def time_mask(spectrogram, max_mask_time=20, num_masks=1):
     """
     Apply time masking to spectrogram.
@@ -122,6 +130,7 @@ def pitch_shift(audio, sr=16000, n_steps=None):
         return audio
 
 
+
 class AudioAugmenter:
     """
     Applies random augmentations to audio with specified probability.
@@ -135,16 +144,6 @@ class AudioAugmenter:
         self.prob = prob
     
     def augment_audio(self, audio, sr=16000):
-        """
-        Apply random augmentations to audio signal.
-        
-        Args:
-            audio: Input audio signal
-            sr: Sample rate
-        
-        Returns:
-            Augmented audio
-        """
         if np.random.random() < self.prob:
             audio = add_gaussian_noise(audio, noise_level=np.random.uniform(0.001, 0.01))
         

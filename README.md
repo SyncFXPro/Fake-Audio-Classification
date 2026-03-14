@@ -126,12 +126,6 @@ Open `http://localhost:5173` in your browser.
 - Supported formats: MP3, WAV, OGG
 - Get instant analysis results
 
-**Record Mode:**
-- Click "Start Recording"
-- Record at least 2 seconds of audio
-- Click "Stop Recording"
-- Get instant analysis results
-
 ## API Endpoints
 
 ### GET `/api/model/status`
@@ -162,7 +156,7 @@ Upload an audio file for analysis.
 ```
 
 ### POST `/api/predict/realtime`
-Analyze recorded audio from microphone.
+Accepts base64-encoded audio for analysis.
 
 **Request:**
 ```json
@@ -258,10 +252,6 @@ Output: Fakeness score [0-1]
 - Ensure Flask server is running on port 5000
 - Check CORS settings in `server.py`
 - Verify API_BASE_URL in `main.js`
-
-### Audio recording not working
-- Grant microphone permissions in browser
-- Use HTTPS or localhost (required for getUserMedia)
 
 ## License
 

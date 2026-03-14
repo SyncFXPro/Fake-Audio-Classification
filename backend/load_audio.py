@@ -1,10 +1,13 @@
 import librosa
 import os
-
+#Deprecated!
 audio_path =  r"H:\FAC\public\audio\freepik__elegant-digital-chime_-soft-marimba-note_-airy-pluck_-non-aggressive_-friendly-in__1740 (1).mp3"
 
 
 def load_audio_file(file_path):
+    """
+    Loads an audio file and returns a list of audio samples.
+    """
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
     if not file_path.endswith(".mp3"):
         raise ValueError("Invalid file type. Please provide a .mp3 file.")
@@ -19,6 +22,9 @@ def load_audio_file(file_path):
 
 
 def main():
+    """
+    Main function to load the audio file.
+    """
     try:
         load_audio_file(audio_path)
     except Exception as e:

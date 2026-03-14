@@ -12,7 +12,7 @@ This is an AI-assisted research project that demonstrates the challenges and lim
 - Complete ML pipeline from data to deployment
 - 99.79% F1 score on validation set (2020-2022 era TTS systems)
 - Real-time inference with Flask API
-- Interactive web interface with file upload and microphone recording
+- Interactive web interface with file upload
 - Comprehensive training analysis and visualization
 
 **Known Limitations:**
@@ -104,7 +104,7 @@ FAC/
 ├── frontend/
 │   ├── index.html                  # Complete UI with graphs
 │   ├── style.css                   # Professional styling
-│   ├── main.js                     # Upload + recording logic
+│   ├── main.js                     # Upload logic
 │   └── package.json                # Vite configuration
 └── Dataset/
     └── for-2sec/for-2seconds/
@@ -133,8 +133,7 @@ FAC/
    - Returns: `{"fakeness_score": 0.87, "prediction": "fake", "confidence": 0.87}`
 
 4. **POST `/api/predict/realtime`**
-   - Analyze recorded audio from microphone
-   - Accepts: Base64-encoded audio blob
+   - Accepts base64-encoded audio blob
    - Returns: Same format as upload
 
 5. **GET `/api/graph/<graph_name>`**
@@ -145,7 +144,6 @@ FAC/
 
 - Interactive web interface
 - File upload with drag & drop
-- Real-time microphone recording
 - Result visualization with gauges
 - Complete training analysis with graphs
 - Disclaimers and technical documentation

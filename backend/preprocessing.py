@@ -1,7 +1,7 @@
 import librosa
 import numpy as np
 import torch
-
+#this is the "production" code for the spectrogram, not the  #load_audio.py code..
 def audio_to_spectrogram(audio_path, sr=16000, duration=2.0, n_fft=1024, hop_length=256, n_mels=128):
     """
     Convert audio file to normalized Log-Mel spectrogram.
@@ -19,7 +19,6 @@ def audio_to_spectrogram(audio_path, sr=16000, duration=2.0, n_fft=1024, hop_len
     """
     try:
         y, sr = librosa.load(audio_path, sr=sr, duration=duration)
-        
         mel_spec = librosa.feature.melspectrogram(
             y=y, 
             sr=sr,
@@ -27,11 +26,8 @@ def audio_to_spectrogram(audio_path, sr=16000, duration=2.0, n_fft=1024, hop_len
             hop_length=hop_length,
             n_mels=n_mels
         )
-        
         log_mel = librosa.power_to_db(mel_spec, ref=np.max)
-        
-        normalized = (log_mel - log_mel.mean()) / (log_mel.std() + 1e-8)
-        
+        normalized = (log_mel - log_mel.mean()) / (log_mel.std() + 1e-8) #Making sure the spectrogram makes sense.
         return normalized
     
     except Exception as e:

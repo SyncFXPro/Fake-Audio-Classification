@@ -128,13 +128,6 @@ VITE v8.0.0  ready in 153 ms
    - Supported: MP3, WAV, OGG
    - Get instant results
 
-3. **Record Mode:**
-   - Click "Record Audio" tab
-   - Click "Start Recording"
-   - Speak for 2+ seconds
-   - Click "Stop Recording"
-   - Get instant results
-
 ## Understanding Results
 
 ### Fakeness Score
@@ -199,12 +192,6 @@ train_loader, val_loader, test_loader = get_dataloaders(
 1. Check Flask is running on port 5000
 2. Check CORS is enabled in `server.py`
 3. Verify `API_BASE_URL` in `main.js`
-
-### Microphone not working
-**Solution:**
-1. Grant microphone permissions in browser
-2. Use HTTPS or localhost
-3. Check browser console for errors
 
 ## Next Steps
 
