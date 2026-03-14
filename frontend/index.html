@@ -3,20 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FAC</title>
+    <title>Deepfake Audio Detection</title>
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
     <div id="app">
-        <h1></h1>
-        <p>Real-time Audio Classification.</p>
-        <button id="submit-button">Submit</button>
-        <input type="file" id="file-input" accept="audio/mpeg">
-        <li><a href="https://miro.com/app/board/uXjVGywdqiw=/?share_link_id=305327018615">Miro Board </a></li>
+        <header>
+            <h1>Deepfake Audio Detection</h1>
+            <p class="subtitle">AI-powered audio authenticity verification</p>
+        </header>
 
-        <p id="password-message">miro password: ilovebibi</p>
-        
-        
+        <div class="disclaimer-banner" role="region" aria-label="Accuracy disclaimer">
+            <div class="disclaimer-content">
+                <h3>Accuracy limitations</h3>
+                <p>This detector is trained on older TTS systems and their spectrogram patterns. It achieves high accuracy on training-era synthetic speech but only about 60% accuracy on modern TTS (e.g. ElevenLabs). Do not rely on it for definitive authenticity of newer synthetic voices.</p>
+            </div>
+        </div>
+
+        <div class="disclaimer-banner disclaimer-ai" role="region" aria-label="AI-assisted project disclaimer">
+            <div class="disclaimer-content">
+                <h3>AI-Assisted project</h3>
+                <p>I learned the core principles of ML models and CNNs. The architecture was my idea and I implemented it; some of the coding was AI-assisted.</p>
+            </div>
+        </div>
+
+        <div class="mode-selector">
+            <button id="uploadModeBtn" class="mode-btn active">Upload File</button>
+            <button id="recordModeBtn" class="mode-btn">Record Audio</button>
+        </div>
+
+        <div id="uploadMode" class="mode-content active">
+            <div id="dropZone" class="drop-zone">
+                <div class="drop-zone-content">
+                    <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <p class="drop-text">Drag & drop audio file here</p>
+                    <p class="drop-subtext">or</p>
+                    <button id="browseBtn" class="browse-btn">Browse Files</button>
+                    <input type="file" id="fileInput" accept=".mp3,.wav,.ogg" hidden>
+                    <p class="file-types">Supported: MP3, WAV, OGG</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="recordMode" class="mode-content">
+            <div class="record-container">
+                <div class="waveform-container">
+                    <canvas id="waveformCanvas"></canvas>
+                </div>
+                <button id="recordBtn" class="record-btn">
+                    <span class="record-icon"></span>
+                    <span class="record-text">Start Recording</span>
+                </button>
+                <p class="record-info">Record at least 2 seconds of audio</p>
+            </div>
+        </div>
+
+        <div id="loadingIndicator" class="loading-indicator hidden">
+            <div class="spinner"></div>
+            <p>Analyzing audio...</p>
+        </div>
+
+        <div id="resultContainer" class="result-container hidden">
+            <h2>Analysis Result</h2>
+            
+            <div class="result-badge-container">
+                <div id="resultBadge" class="result-badge"></div>
+            </div>
+
+            <div class="gauge-container">
+                <svg class="gauge" viewBox="0 0 200 120">
+                    <path class="gauge-bg" d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#e0e0e0" stroke-width="20" stroke-linecap="round"/>
+                    <path id="gaugeFill" class="gauge-fill" d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke-width="20" stroke-linecap="round"/>
+                    <text id="gaugeText" x="100" y="90" text-anchor="middle" class="gauge-text">0%</text>
+                </svg>
+                <p class="gauge-label">Fakeness Score</p>
+            </div>
+
+            <div class="result-details">
+                <div class="detail-item">
+                    <span class="detail-label">Prediction:</span>
+                    <span id="predictionText" class="detail-value"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Confidence:</span>
+                    <span id="confidenceText" class="detail-value"></span>
+                </div>
+            </div>
+
+            <button id="analyzeAgainBtn" class="analyze-again-btn">Analyze Another</button>
+        </div>
+
+        <section class="results-gallery-section" aria-label="Training results graphs">
+            <h2 class="results-gallery-title">Training results</h2>
+            <div class="results-gallery-boundary">
+                <div id="resultsGalleryTrack" class="results-gallery-track"></div>
+            </div>
+        </section>
+
+        <footer>
+            <p>Powered by CNN-based spectrogram analysis</p>
+        </footer>
     </div>
     <script type="module" src="/main.js"></script>
 </body>

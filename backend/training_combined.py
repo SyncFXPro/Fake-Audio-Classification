@@ -11,7 +11,7 @@ import seaborn as sns
 from tqdm import tqdm
 
 from model import SpectrogramCNN
-from dataset import get_dataloaders
+from dataset_combined import get_combined_dataloaders
 
 
 class Trainer:
@@ -68,7 +68,7 @@ class Trainer:
             all_preds.extend(preds.cpu().numpy())
             all_labels.extend(labels.cpu().numpy())
             
-            if batch_idx % 50 == 0:
+            if batch_idx % 100 == 0:
                 pbar.set_postfix({'loss': loss.item()})
         
         epoch_loss = running_loss / len(self.train_loader)
@@ -123,7 +123,7 @@ class Trainer:
             'history': self.history
         }
         
-        torch.save(checkpoint, 'checkpoints/best_model.pth')
+        torch.save(checkpoint, 'checkpoints/best_model_combined.pth')
         print(f"Saved checkpoint with F1: {f1_score:.4f}")
     
     def train(self, epochs=40):
@@ -162,7 +162,7 @@ class Trainer:
                 print(f"\nEarly stopping triggered at epoch {epoch+1}")
                 break
         
-        with open('results/training_history.json', 'w') as f:
+        with open('results/training_history_combined.json', 'w') as f:
             json.dump(self.history, f, indent=2)
         
         print(f"\nTraining completed! Best F1: {self.best_f1:.4f}")
@@ -173,7 +173,7 @@ def run_validation_test(model, test_loader, device='cuda'):
     Run comprehensive validation test with metrics and visualizations.
     """
     print("\n" + "="*50)
-    print("Running Validation Test")
+    print("Running Validation Test on Combined Dataset")
     print("="*50)
     
     model.eval()
@@ -221,15 +221,15 @@ def run_validation_test(model, test_loader, device='cuda'):
         'confusion_matrix': cm.tolist()
     }
     
-    with open('results/validation_metrics.json', 'w') as f:
+    with open('results/validation_metrics_combined.json', 'w') as f:
         json.dump(metrics, f, indent=2)
     
-    generate_validation_plots(all_labels, all_probs, all_preds, cm)
+    generate_validation_plots(all_labels, all_probs, all_preds, cm, suffix='_combined')
     
     print("\nGraphs saved to backend/results/")
 
 
-def generate_validation_plots(labels, probs, preds, cm):
+def generate_validation_plots(labels, probs, preds, cm, suffix=''):
     """Generate all validation plots."""
     
     try:
@@ -237,8 +237,8 @@ def generate_validation_plots(labels, probs, preds, cm):
     except:
         plt.style.use('default')
     
-    if os.path.exists('results/training_history.json'):
-        with open('results/training_history.json', 'r') as f:
+    if os.path.exists(f'results/training_history{suffix}.json'):
+        with open(f'results/training_history{suffix}.json', 'r') as f:
             history = json.load(f)
         
         fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8))
@@ -248,7 +248,7 @@ def generate_validation_plots(labels, probs, preds, cm):
         ax1.plot(epochs, history['val_loss'], 'r-', label='Validation Loss')
         ax1.set_xlabel('Epoch')
         ax1.set_ylabel('Loss')
-        ax1.set_title('Training and Validation Loss')
+        ax1.set_title('Training and Validation Loss (Combined Dataset)')
         ax1.legend()
         ax1.grid(True)
         
@@ -256,12 +256,12 @@ def generate_validation_plots(labels, probs, preds, cm):
         ax2.plot(epochs, history['val_acc'], 'r-', label='Validation Accuracy')
         ax2.set_xlabel('Epoch')
         ax2.set_ylabel('Accuracy')
-        ax2.set_title('Training and Validation Accuracy')
+        ax2.set_title('Training and Validation Accuracy (Combined Dataset)')
         ax2.legend()
         ax2.grid(True)
         
         plt.tight_layout()
-        plt.savefig('results/training_history.png', dpi=300, bbox_inches='tight')
+        plt.savefig(f'results/training_history{suffix}.png', dpi=300, bbox_inches='tight')
         plt.close()
     
     fpr, tpr, _ = roc_curve(labels, probs)
@@ -272,10 +272,10 @@ def generate_validation_plots(labels, probs, preds, cm):
     plt.plot([0, 1], [0, 1], 'r--', linewidth=2, label='Random Classifier')
     plt.xlabel('False Positive Rate')
     plt.ylabel('True Positive Rate')
-    plt.title('ROC Curve')
+    plt.title('ROC Curve (Combined Dataset)')
     plt.legend()
     plt.grid(True)
-    plt.savefig('results/roc_curve.png', dpi=300, bbox_inches='tight')
+    plt.savefig(f'results/roc_curve{suffix}.png', dpi=300, bbox_inches='tight')
     plt.close()
     
     plt.figure(figsize=(8, 6))
@@ -283,8 +283,8 @@ def generate_validation_plots(labels, probs, preds, cm):
                 xticklabels=['Real', 'Fake'], yticklabels=['Real', 'Fake'])
     plt.xlabel('Predicted')
     plt.ylabel('Actual')
-    plt.title('Confusion Matrix')
-    plt.savefig('results/confusion_matrix.png', dpi=300, bbox_inches='tight')
+    plt.title('Confusion Matrix (Combined Dataset)')
+    plt.savefig(f'results/confusion_matrix{suffix}.png', dpi=300, bbox_inches='tight')
     plt.close()
     
     plt.figure(figsize=(10, 6))
@@ -294,10 +294,10 @@ def generate_validation_plots(labels, probs, preds, cm):
     plt.hist(fake_probs, bins=50, alpha=0.6, color='red', label='Fake Audio', edgecolor='black')
     plt.xlabel('Predicted Fakeness Probability')
     plt.ylabel('Count')
-    plt.title('Probability Distribution')
+    plt.title('Probability Distribution (Combined Dataset)')
     plt.legend()
     plt.grid(True, alpha=0.3)
-    plt.savefig('results/probability_distribution.png', dpi=300, bbox_inches='tight')
+    plt.savefig(f'results/probability_distribution{suffix}.png', dpi=300, bbox_inches='tight')
     plt.close()
     
     precision_vals, recall_vals, _ = precision_recall_curve(labels, probs)
@@ -308,17 +308,20 @@ def generate_validation_plots(labels, probs, preds, cm):
              label=f'PR Curve (AP = {avg_precision:.4f})')
     plt.xlabel('Recall')
     plt.ylabel('Precision')
-    plt.title('Precision-Recall Curve')
+    plt.title('Precision-Recall Curve (Combined Dataset)')
     plt.legend()
     plt.grid(True)
-    plt.savefig('results/precision_recall_curve.png', dpi=300, bbox_inches='tight')
+    plt.savefig(f'results/precision_recall_curve{suffix}.png', dpi=300, bbox_inches='tight')
     plt.close()
 
 
 if __name__ == "__main__":
-    print("Initializing training...")
+    print("="*60)
+    print("Training on COMBINED Dataset")
+    print("(for-original + for-norm + for-rerec)")
+    print("="*60)
     
-    print(f"CUDA available: {torch.cuda.is_available()}")
+    print(f"\nCUDA available: {torch.cuda.is_available()}")
     print(f"GPU count: {torch.cuda.device_count()}")
     
     if torch.cuda.is_available():
@@ -329,8 +332,8 @@ if __name__ == "__main__":
     
     root_dir = r"H:\FAC\Dataset"
     
-    print("\nLoading datasets...")
-    train_loader, val_loader, test_loader = get_dataloaders(
+    print("\nLoading combined datasets...")
+    train_loader, val_loader, test_loader = get_combined_dataloaders(
         root_dir, batch_size=64, num_workers=8
     )
     
@@ -345,10 +348,14 @@ if __name__ == "__main__":
     
     trainer = Trainer(model, train_loader, val_loader, device=device, lr=3e-4)
     
+    print("\n" + "="*60)
+    print("Expected training time: 8-10 hours with ~132K samples")
+    print("="*60)
+    
     trainer.train(epochs=40)
     
     print("\nLoading best model for validation test...")
-    checkpoint = torch.load('checkpoints/best_model.pth')
+    checkpoint = torch.load('checkpoints/best_model_combined.pth')
     if hasattr(model, 'module'):
         model.module.load_state_dict(checkpoint['model_state_dict'])
     else:
@@ -356,4 +363,8 @@ if __name__ == "__main__":
     
     run_validation_test(model, test_loader, device=device)
     
-    print("\nTraining and validation complete!")
+    print("\n" + "="*60)
+    print("Training and validation complete!")
+    print("Model saved to: checkpoints/best_model_combined.pth")
+    print("Graphs saved to: results/*_combined.png")
+    print("="*60)
