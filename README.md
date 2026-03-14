@@ -203,11 +203,11 @@ All graphs saved to `backend/results/`
 
 | Training History | ROC Curve | Confusion Matrix |
 |------------------|-----------|-----------------|
-| ![Training History](https://github.com/SyncFXPro/Fake-Audio-Classification/blob/main/backend/results/training_history.png?raw=true) | ![ROC Curve](https://github.com/SyncFXPro/Fake-Audio-Classification/blob/main/backend/results/roc_curve.png?raw=true) | ![Confusion Matrix](https://github.com/SyncFXPro/Fake-Audio-Classification/blob/main/backend/results/confusion_matrix.png?raw=true) |
+| ![Training History](https://github.com/SyncFXPro/Fake-Audio-Classification/blob/main/backend/results/training_history_combined.png?raw=true) | ![ROC Curve](https://github.com/SyncFXPro/Fake-Audio-Classification/blob/main/backend/results/roc_curve_combined.png?raw=true) | ![Confusion Matrix](https://github.com/SyncFXPro/Fake-Audio-Classification/blob/main/backend/results/confusion_matrix_combined.png?raw=true) |
 
 | Probability Distribution | Precision-Recall Curve |
 |---------------------------|------------------------|
-| ![Probability Distribution](https://github.com/SyncFXPro/Fake-Audio-Classification/blob/main/backend/results/probability_distribution.png?raw=true) | ![Precision-Recall Curve](https://github.com/SyncFXPro/Fake-Audio-Classification/blob/main/backend/results/precision_recall_curve.png?raw=true) |
+| ![Probability Distribution](https://github.com/SyncFXPro/Fake-Audio-Classification/blob/main/backend/results/probability_distribution_combined.png?raw=true) | ![Precision-Recall Curve](https://github.com/SyncFXPro/Fake-Audio-Classification/blob/main/backend/results/precision_recall_curve_combined.png?raw=true) |
 
 ## Technical Details
 

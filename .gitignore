@@ -29,7 +29,9 @@ env/
 *.pth
 *.pt
 checkpoints/
-results/
+# Allow graph PNGs in backend/results for README
+!backend/results/
+!backend/results/*.png
 
 # Jupyter Notebook
 .ipynb_checkpoints
